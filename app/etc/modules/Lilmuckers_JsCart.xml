@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento javascript cart management module
+ *
+ * @category  Lilmuckers
+ * @package   Lilmuckers_JsCart
+ * @copyright Copyright (c) 2014 Patrick McKinley (http://www.patrick-mckinley.com)
+ * @license   http://choosealicense.com/licenses/mit/
+ */
+-->
+<config>
+    <modules>
+        <Lilmuckers_JsCart>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Lilmuckers_JsCart>
+    </modules>
+</config>

@@ -1,0 +1,112 @@
+<?php
+/**
+ * Template for WMG_PreOrder
+ */
+?>
+<?php $_htmlId      = $this->getElement()->getHtmlId() ?>
+<?php $_htmlClass   = $this->getElement()->getClass() ?>
+<?php $_htmlName    = $this->getElement()->getName() ?>
+<?php $_readonly    = $this->getElement()->getReadonly() ?>
+
+<tr>
+    <td class="label"><?php echo $this->getElement()->getLabel() ?></td>
+    <td colspan="10" class="grid tier">
+    <table cellspacing="0" class="data border" id="origin_table">
+        <col width="300" />
+        <col width="50" />
+        <col />
+        <thead>
+            <tr class="headings">
+                <th><?php echo Mage::helper('liljscart')->__('Origin URL') ?></th>
+                <th class="last"><?php echo Mage::helper('liljscart')->__('Action') ?></th>
+            </tr>
+        </thead>
+        <tbody id="<?php echo $_htmlId ?>_container"></tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4" class="a-right"><?php echo $this->getAddButtonHtml() ?></td>
+            </tr>
+        </tfoot>
+    </table>
+    <p class="note"><?php echo Mage::helper('wmgpreorder')->__('Format: http://url.com[:8000]  - exclude trailing slash, just the domain, and with the http/https value') ?></p>
+    
+
+<script type="text/javascript">
+//<![CDATA[
+
+var storeRowTemplate = '<tr id="origin_row_{{index}}">'
+    + '<td><input class="<?php echo $_htmlClass ?> origin_url" name="<?php echo $_htmlName ?>[{{index}}][origin]" id="origin_row_{{index}}_origin"></td>'
+    + '<td class="last"><input type="hidden" name="<?php echo $_htmlName ?>[{{index}}][delete]" class="delete" value="" id="origin_row_{{index}}_delete" />'
+    + '<button title="<?php echo Mage::helper("liljscart")->__("Delete Origin") ?>" type="button" class="scalable delete icon-btn delete-product-option" id="origin_row_{{index}}_delete_button" onclick="return originControl.deleteItem(event);">'
+    + '<span><?php echo Mage::helper("liljscart")->__("Delete") ?></span></button></td>'
+    + '</tr>';
+
+var originControl = {
+    template: new Template(storeRowTemplate, new RegExp('(^|.|\\r|\\n)({{\\s*(\\w+)\\s*}})', "")),
+    itemsCount: 0,
+    addItem : function () {
+        <?php if ($_readonly): ?>
+        if (arguments.length < 6) {
+            return;
+        }
+        <?php endif; ?>
+        var data = {
+            origin: '',
+            readOnly: false,
+            index: this.itemsCount++
+        };
+
+        if(arguments.length >= 1) {
+            data.origin = arguments[0];
+            data.readOnly = arguments[1];
+        }
+
+        Element.insert($('<?php echo $_htmlId ?>_container'), {
+            bottom : this.template.evaluate(data)
+        });
+
+        $('origin_row_' + data.index + '_origin').value = data.origin;
+
+        if (data.readOnly == '1') {
+            ['origin', 'delete'].each(function(idx){
+                $('origin_row_'+data.index+'_'+idx).disabled = true;
+            });
+            $('origin_row_'+data.index+'_delete_button').hide();
+        }
+
+        <?php if ($_readonly): ?>
+        $('<?php echo $_htmlId ?>_container').select('input', 'select').each(this.disableElement);
+        $('<?php echo $_htmlId ?>_container').up('table').select('button').each(this.disableElement);
+        <?php else: ?>
+        $('<?php echo $_htmlId ?>_container').select('input', 'select').each(function(el){ Event.observe(el, 'change', el.setHasChanges.bind(el)); });
+        <?php endif; ?>
+
+    },
+    disableElement: function(el) {
+        el.disabled = true;
+        el.addClassName('disabled');
+    },
+    deleteItem: function(event) {
+        var tr = Event.findElement(event, 'tr');
+        if (tr) {
+            Element.select(tr, '.delete').each(function(elem){elem.value='1'});
+            Element.select(tr, ['input', 'select']).each(function(elem){elem.hide()});
+            Element.hide(tr);
+            Element.addClassName(tr, 'no-display template');
+        }
+        return false;
+    }
+};
+<?php $values = $this->getOriginUrls(); ?>
+<?php if(!empty($values)): ?>
+    <?php foreach ($values as $_item): ?>
+    originControl.addItem('<?php echo $_item ?>');
+    <?php endforeach; ?>
+<?php endif; ?>
+<?php if ($_readonly): ?>
+$('<?php echo $_htmlId ?>_container').up('table').select('button')
+    .each(originControl.disableElement);
+<?php endif; ?>
+//]]>
+</script>
+</td></tr>

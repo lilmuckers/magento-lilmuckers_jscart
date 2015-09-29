@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento javascript cart management module
+ *
+ * @category  Lilmuckers
+ * @package   Lilmuckers_JsCart
+ * @copyright Copyright (c) 2014 Patrick McKinley (http://www.patrick-mckinley.com)
+ * @license   http://choosealicense.com/licenses/mit/
+ */
+-->
+<layout version="0.1.0">
+    <adminhtml_jscart_consumer_index>
+        <reference name="content">
+            <block type="liljscart/adminhtml_consumer" name="consumers"></block>
+        </reference>
+    </adminhtml_jscart_consumer_index>
+    
+    <adminhtml_jscart_consumer_grid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="liljscart/adminhtml_consumer_grid" name="consumer_grid"/>
+        </block>
+    </adminhtml_jscart_consumer_grid>
+    
+    <adminhtml_jscart_consumer_edit>
+        <reference name="content">
+            <block type="liljscart/adminhtml_consumer_edit" name="consumer_edit"></block>
+        </reference>
+        <reference name="left">
+            <block type="liljscart/adminhtml_consumer_edit_tabs" name="consumer_edit_tabs"></block>
+        </reference>
+    </adminhtml_jscart_consumer_edit>
+    
+
+</layout>

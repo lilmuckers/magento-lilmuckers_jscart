@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * WMG Artist Manager
+ *
+ * @category  WMG
+ * @package   WMG_Artist
+ * @author    Patrick McKinley <patrick.mckinley@wmg.com>
+ * @copyright 2013 Warner Music Group. (http://www.wmg.com)
+ */
+-->
+<config>
+    <menu>
+        <sales>
+            <children>
+                <liljscart translate="title" module="liljscart">
+                    <title>JS Cart Consumers</title>
+                    <sort_order>1000</sort_order>
+                    <children>
+                        <consumers>
+                            <title>Manage Consumers</title>
+                            <sort_order>100</sort_order>
+                            <action>adminhtml/jscart_consumer</action>
+                        </consumers>
+                        <!--consumer_orders>
+                            <title>View Orders</title>
+                            <sort_order>200</sort_order>
+                            <action>adminhtml/pita/pending</action>
+                        </consumer_orders>
+                        <consumer_quotes>
+                            <title>View Quotes</title>
+                            <sort_order>200</sort_order>
+                            <action>adminhtml/pita/pending</action>
+                        </consumer_quotes-->
+                    </children>
+                </liljscart>
+            </children>
+        </sales>
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <sales>
+                        <children>
+                            <liljscart translate="title" module="liljscart">
+                                <title>JS Cart Consumers</title>
+                                <sort_order>1000</sort_order>
+                                <children>
+                                    <generate translate="title">
+                                        <title>Regenerate Reports</title>
+                                        <sort_order>0</sort_order>
+                                    </generate>
+                                    <consumers translate="title">
+                                        <title>Manage Consumers</title>
+                                        <sort_order>0</sort_order>
+                                    </consumers>
+                                    <!--consumer_orders translate="title">
+                                        <title>View Orders</title>
+                                        <sort_order>10</sort_order>
+                                    </consumer_orders>
+                                    <consumer_quotes translate="title">
+                                        <title>View Quotes</title>
+                                        <sort_order>20</sort_order>
+                                    </consumer_quotes-->
+                                </children>
+                            </liljscart>
+                        </children>
+                    </sales>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>
